@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hacking Site</title>
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: Arial, sans-serif;
+            color: white;
+        }
+
+        .background-image {
+            background-image: url('https://wallpapers.com/images/hd/hacker-background-uxvhaqwmbsp6qoth.jpg');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            width: 100vw;
+            height: 100vh;
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: -1;
+        }
+
+        .content {
+            text-align: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        .title {
+            font-size: 3em;
+            margin-top: 20px;
+            font-weight: bold;
+            color: white;
+            text-shadow: 0px 0px 10px #ffffff;
+        }
+
+        .button {
+            padding: 15px 30px;
+            font-size: 1.2em;
+            color: #00ff00;
+            background-color: black;
+            border: 2px solid #00ff00;
+            cursor: pointer;
+            margin-top: 20px;
+            transition: 0.3s;
+            display: block;
+            width: 200px;
+            margin: 10px auto;
+        }
+
+        .button:hover {
+            background-color: #00ff00;
+            color: black;
+        }
+
+        .fake-info {
+            display: block;
+            margin-top: 20px;
+            font-size: 1.2em;
+            color: white;
+            text-align: left;
+            line-height: 1.5em;
+            white-space: pre-wrap;
+            border: 2px solid #00ff00;
+            padding: 15px;
+            background-color: rgba(0, 0, 0, 0.8);
+            width: 80%;
+            margin: 20px auto;
+        }
+    </style>
+    <script>
+        function getRandomElement(array) {
+            return array[Math.floor(Math.random() * array.length)];
+        }
+
+        function generateRandomData() {
+            const firstNames = ["Mario", "Luca", "Giulia", "Alessandra", "Marco", "Elena", "Francesco", "Sara"];
+            const lastNames = ["Rossi", "Verdi", "Bianchi", "Gallo", "Moretti", "Fontana", "Ricci", "Russo"];
+            const locations = ["Roma, Italia", "Milano, Italia", "Napoli, Italia", "Torino, Italia", "Genova, Italia"];
+            
+            const firstName = getRandomElement(firstNames);
+            const lastName = getRandomElement(lastNames);
+            const email = `${firstName.toLowerCase()}.${lastName.toLowerCase()}@gmail.com`;
+            const ip = `${Math.floor(Math.random() * 255)}.${Math.floor(Math.random() * 255)}.${Math.floor(Math.random() * 255)}.${Math.floor(Math.random() * 255)}`;
+            const location = getRandomElement(locations);
+
+            return `Nome: ${firstName}\nCognome: ${lastName}\nIndirizzo IP: ${ip}\nPosizione: ${location}\nEmail: ${email}`;
+        }
+
+        function showFakeInfo() {
+            const fakeInfo = document.getElementById('fakeInfo');
+            fakeInfo.textContent = generateRandomData();
+        }
+
+        function simulateTracking(type) {
+            const fakeInfo = document.getElementById('fakeInfo');
+            let dots = "";
+            let count = 0;
+
+            // Simulate dots appearing one by one
+            const interval = setInterval(() => {
+                dots += ".";
+                fakeInfo.textContent = `${type} tracking${dots}`;
+
+                count++;
+                if (count === 3) {
+                    clearInterval(interval);
+                    if (type === "IP") {
+                        const randomIP = `${Math.floor(Math.random() * 255)}.${Math.floor(Math.random() * 255)}.${Math.floor(Math.random() * 255)}.${Math.floor(Math.random() * 255)}`;
+                        fakeInfo.textContent = `Tracked IP Address: ${randomIP}`;
+                    } else if (type === "Email") {
+                        const randomEmail = `${Math.random().toString(36).substring(2, 10)}@hacker.com`;
+                        fakeInfo.textContent = `Tracked Email: ${randomEmail}`;
+                    }
+                }
+            }, 500);
+        }
+    </script>
+</head>
+<body>
+    <div class="background-image"></div>
+    <div class="content">
+        <div class="title">Hacking Site</div>
+        <button class="button" onclick="showFakeInfo()">Hack Person</button>
+        <button class="button" onclick="simulateTracking('IP')">Locate IP</button>
+        <button class="button" onclick="simulateTracking('Email')">Track Email</button>
+        <div class="fake-info" id="fakeInfo">
+            Clicca su "Hack Person" per ottenere informazioni.
+        </div>
+    </div>
+</body>
+</html>
